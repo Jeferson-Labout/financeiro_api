@@ -14,6 +14,11 @@ import lombok.AllArgsConstructor;
 public class CategoryService {
 	private CategoryRepository categoryRepository;
 	
+	public Category buscar(Long id) {
+		return categoryRepository.findById(id)
+				.orElseThrow(()-> new NegocioException("Categoria não encontrada"));
+	}
+	
 	@Transactional
 	public Category salvar(Category category) {
 		boolean nomeEmUso = categoryRepository.findByName(category.getName())

@@ -34,7 +34,7 @@ public class CategoryController {
 	@GetMapping
 	public List<Category> listar() {
 
-		return categoryRepository.findAll();
+		return categoryRepository.findByOrderById();
 
 	}
 

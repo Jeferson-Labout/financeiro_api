@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +27,7 @@ public class Entry {
 	private String description ;	
 	private String type ;
 	private BigDecimal amount ;
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate date ;
 	private boolean paid;
 	@ManyToOne

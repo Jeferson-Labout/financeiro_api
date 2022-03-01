@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jeferson.gestorfinaceiro.domain.model.Category;
 import com.jeferson.gestorfinaceiro.domain.model.Entry;
 import com.jeferson.gestorfinaceiro.domain.repository.EntryRepository;
 import com.jeferson.gestorfinaceiro.domain.service.EntryService;
@@ -35,7 +34,7 @@ public class EntryController {
 	@GetMapping
 	public List<Entry> listar() {
 
-		return entryRepository.findByOrderById();
+		return entryRepository.findByOrderByDate();
 
 	}
 	

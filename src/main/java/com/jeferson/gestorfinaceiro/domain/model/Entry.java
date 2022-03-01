@@ -30,6 +30,8 @@ public class Entry {
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate date ;
 	private boolean paid;
+	
+
 	@ManyToOne
 	private Category category;
 	

@@ -15,7 +15,7 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
 	
 	public List<Entry> findByOrderByDate();
 	
-	@Query(value = "SELECT * FROM entry WHERE Extract(month from date ) = :eventDateMonth and Extract(year from date ) = :eventDateYear", nativeQuery = true)
+	@Query(value = "SELECT * FROM entry WHERE Extract(month from date ) = :eventDateMonth and Extract(year from date ) = :eventDateYear order by  date", nativeQuery = true)
 	List<Entry> buscaMes(@Param("eventDateMonth") Integer eventDateMonth, @Param("eventDateYear") Integer eventDateYear);
 
 }

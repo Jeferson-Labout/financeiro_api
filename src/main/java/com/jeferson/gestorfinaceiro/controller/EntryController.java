@@ -1,5 +1,7 @@
 package com.jeferson.gestorfinaceiro.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -29,13 +31,25 @@ public class EntryController {
 	private EntryService entryService;
 	private EntryRepository entryRepository;
 	
-	@GetMapping
+	@GetMapping("/mes")
 	public List<Entry> listar() {
 
 		return entryRepository.findByOrderByDate();
 
 	}
 	
+	
+	@GetMapping
+		public List<Entry> listarMes() {
+			Date dataSistema = new Date();
+			SimpleDateFormat formatoMes = new SimpleDateFormat("MM");
+			SimpleDateFormat formatoAno = new SimpleDateFormat("yyyy");
+			int eventDateMonth = Integer.parseInt(formatoMes.format(dataSistema));
+			int eventDateYear = Integer.parseInt(formatoAno.format(dataSistema));
+
+			return entryRepository.buscaMes(eventDateMonth,eventDateYear);
+
+		}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Entry> buscar(@PathVariable Long id) {

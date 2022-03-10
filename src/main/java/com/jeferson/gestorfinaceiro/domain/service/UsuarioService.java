@@ -1,10 +1,7 @@
 package com.jeferson.gestorfinaceiro.domain.service;
 import javax.transaction.Transactional;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 import com.jeferson.gestorfinaceiro.domain.exception.NegocioException;
 import com.jeferson.gestorfinaceiro.domain.model.Usuario;
@@ -14,7 +11,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
-public class UsuarioService implements UserDetailsService{
+public class UsuarioService {
 	
 	private UsuarioRepository usuarioRepository; 
 	
@@ -42,18 +39,18 @@ public class UsuarioService implements UserDetailsService{
 		usuarioRepository.deleteById(id);
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		Usuario usuario = usuarioRepository
-				.findByName(name)
-				.orElseThrow(()-> new UsernameNotFoundException("Login não encontrado.") );
-		return User
-				.builder()
-				.username(usuario.getName())
-				.password(usuario.getPassword())
-				.roles("USER")
-				.build();
-	}
+//	@Override
+//	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+//		// TODO Auto-generated method stub
+//		Usuario usuario = usuarioRepository
+//				.findByName(name)
+//				.orElseThrow(()-> new UsernameNotFoundException("Login não encontrado.") );
+//		return User
+//				.builder()
+//				.username(usuario.getName())
+//				.password(usuario.getPassword())
+//				.roles("USER")
+//				.build();
+//	}
 
 }

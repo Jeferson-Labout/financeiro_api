@@ -12,7 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin("*")
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
@@ -51,7 +52,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.withClient("my-angular-app")
 		.secret("@321")
 		.scopes("read", "write")
-		.autoApprove("password")
+		.authorizedGrantTypes("password")
 		.accessTokenValiditySeconds(1800);
 	}
 

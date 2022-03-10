@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,31 +12,33 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.jeferson.gestorfinaceiro.domain.repository.EntryRepository;
-import com.jeferson.gestorfinaceiro.domain.service.CategoryService;
-import com.jeferson.gestorfinaceiro.domain.service.UsuarioService;
 
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+
+@CrossOrigin("*")
+@SuppressWarnings("deprecation")
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	private UsuarioService usuarioService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
 		auth
-		.userDetailsService(usuarioService)
+		.userDetailsService(userDetailsService)
 		.passwordEncoder(passwordEncoder());
+		
 	}
+	
 	@Bean
 	public AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
@@ -52,13 +55,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
-		http			
-		.cors()
-		.and()
-		.csrf().disable()	   
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
+		http	
+			.csrf().disable()
+			.cors().and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
 	}
 
+	@SuppressWarnings("deprecation")
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return NoOpPasswordEncoder.getInstance();
+	}
+	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
@@ -67,9 +75,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-	@SuppressWarnings("deprecation")
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
-	}
+	
+	
 }

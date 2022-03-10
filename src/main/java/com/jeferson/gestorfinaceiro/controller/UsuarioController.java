@@ -23,7 +23,7 @@ import com.jeferson.gestorfinaceiro.domain.service.UsuarioService;
 
 import lombok.AllArgsConstructor;
 
-@CrossOrigin("*")
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/usuarios")
